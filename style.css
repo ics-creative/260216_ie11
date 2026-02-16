@@ -212,11 +212,11 @@ img {
 }
 
 .fit__frame--wide {
-  background-image: url("./images/photo-wide.svg");
+  background-image: url("./images/photo-wide.png");
 }
 
 .fit__frame--tall {
-  background-image: url("./images/photo-tall.svg");
+  background-image: url("./images/photo-tall.png");
 }
 
 .ratio-legacy {
