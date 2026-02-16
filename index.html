@@ -67,11 +67,11 @@
           <div class="fit-grid">
             <figure class="fit-card">
               <figcaption>横長画像を固定枠に表示</figcaption>
-              <div class="fit__frame fit__frame--fallback" style="background-image:url('./images/photo-wide.svg')"></div>
+              <div class="fit__frame fit__frame--fallback fit__frame--wide"></div>
             </figure>
             <figure class="fit-card">
               <figcaption>縦長画像を固定枠に表示</figcaption>
-              <div class="fit__frame fit__frame--fallback" style="background-image:url('./images/photo-tall.svg')"></div>
+              <div class="fit__frame fit__frame--fallback fit__frame--tall"></div>
             </figure>
           </div>
         </section>
@@ -84,9 +84,7 @@
           <div class="ratio-grid">
             <article class="ratio-card">
               <h3>padding-top 手法</h3>
-              <div class="ratio-legacy">
-                <div class="ratio__inner">16:9</div>
-              </div>
+              <div class="ratio-legacy"></div>
             </article>
           </div>
         </section>
@@ -131,19 +129,19 @@
         <section class="panel" id="accordion">
           <h2>7. details/summary の代替実装</h2>
           <p>
-            <code>button</code> + <code>div</code> で作る、カスタムアコーディオンの例です。
+            <code>div</code> + <code>div</code> で作る、カスタムアコーディオンの例です。
           </p>
           <div class="accordion">
-            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-1" id="acc-trigger-1">
+            <div class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-1" id="acc-trigger-1">
               なぜこの実装が必要だったのか？
-            </button>
+            </div>
             <div class="accordion__panel is-hidden" id="acc-panel-1">
               IE11は <code>details/summary</code> に未対応で、JSによる自作UIが一般的でした。
             </div>
 
-            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-2" id="acc-trigger-2">
+            <div class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-2" id="acc-trigger-2">
               フォーカス管理はどうしていたか？
-            </button>
+            </div>
             <div class="accordion__panel is-hidden" id="acc-panel-2">
               モーダルやアコーディオンは、キーボード操作やフォーカス制御を別途実装する必要がありました。
             </div>

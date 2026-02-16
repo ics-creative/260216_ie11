@@ -18,5 +18,5 @@ Runnable examples for the article:
 - `loading="lazy"` fallback using manual lazy loader
 - `classList.toggle(name, force)` replacement via add/remove
 - `fetch()` fallback using `XMLHttpRequest`
-- `details/summary` style behavior with `div + button`
+- `details/summary` style behavior with `div + div`
 - `X-UA-Compatible` meta snippet

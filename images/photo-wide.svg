@@ -9,5 +9,5 @@
   <circle cx="640" cy="120" r="70" fill="#ffd166" opacity="0.9"/>
   <path d="M0 330 L170 220 L300 295 L430 180 L560 260 L800 150 L800 450 L0 450 Z" fill="#0f4c81" opacity="0.9"/>
   <text x="38" y="70" fill="#ffffff" font-family="Arial, sans-serif" font-size="42" font-weight="700">WIDE IMAGE</text>
-  <text x="38" y="118" fill="#d7ebff" font-family="Arial, sans-serif" font-size="24">800 x 450 (16:9)</text>
+  <text x="38" y="118" fill="#d7ebff" font-family="Arial, sans-serif" font-size="24">800 x 450</text>
 </svg>

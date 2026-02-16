@@ -2,8 +2,8 @@
    ベース
 ======================================== */
 body {
-  font-family: sans-serif;
-  line-height: 1.6;
+  font-family: "ＭＳ Ｐゴシック", sans-serif;
+  line-height: 1.5;
   color: #102a43;
   background: #f5f8fc;
 }
@@ -45,12 +45,12 @@ img {
   margin: 0 auto;
   padding: 16px;
   display: flex;
-  gap: 16px;
   align-items: flex-start;
 }
 
 .local-nav {
   width: 256px;
+  margin-right: 16px;
   border: 1px solid #d8e0ea;
   border-radius: 8px;
   background: #fff;
@@ -137,6 +137,7 @@ img {
 }
 
 .media {
+  display: -ms-flexbox;
   display: flex;
   border: 1px solid #d8e0ea;
   border-radius: 8px;
@@ -146,15 +147,21 @@ img {
 
 .media__thumb {
   width: 180px;
+  -ms-flex: 0 0 180px;
   flex: 0 0 180px;
 }
 
 .media__body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 1%;
   min-width: 0;
   padding: 12px;
 }
 
 .media__title {
+  display: block;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -197,18 +204,19 @@ img {
   background: #eaf1fa;
 }
 
-.fit__frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 /* IE11前提: object-fit の代わりに背景画像で cover を再現 */
 .fit__frame--fallback {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.fit__frame--wide {
+  background-image: url("./images/photo-wide.svg");
+}
+
+.fit__frame--tall {
+  background-image: url("./images/photo-tall.svg");
 }
 
 .ratio-legacy {
@@ -220,21 +228,6 @@ img {
 .ratio-legacy {
   position: relative;
   padding-top: 56.25%;
-}
-
-.ratio__inner {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #9e4c00;
-}
-
-.ratio-legacy .ratio__inner {
-  position: absolute;
-  inset: 0;
 }
 
 /* ========================================
@@ -365,6 +358,8 @@ img {
   }
 
   .local-nav {
+    margin-right: 0;
+    margin-bottom: 16px;
     width: auto;
     position: relative;
     top: auto;
