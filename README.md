@@ -5,12 +5,9 @@ Runnable examples for the article:
 
 ## Quick Start
 
-1. Run a local web server from the project root:
-```bash
-python3 -m http.server 8080
-```
-2. Open:
-`http://localhost:8080/samples/ie11-retro/`
+1. Open this file directly in a browser:
+`/Users/ikeda/Documents/git/260216_ie11/index.html`
+2. API fallback sample also works on `file://` with built-in data.
 
 ## Included Demos
 
@@ -21,5 +18,5 @@ python3 -m http.server 8080
 - `loading="lazy"` fallback using manual lazy loader
 - `classList.toggle(name, force)` replacement via add/remove
 - `fetch()` fallback using `XMLHttpRequest`
-- `details/summary` style behavior with `div + button + ARIA`
+- `details/summary` style behavior with `div + button`
 - `X-UA-Compatible` meta snippet

@@ -4,29 +4,29 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IE11 Retro Samples</title>
+    <title>IE11時代の互換性サンプル</title>
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <header class="page-header">
-      <p class="page-header__kicker">2010s Frontend Retro</p>
-      <h1 class="page-header__title">IE11 Era Coding Samples</h1>
+      <p class="page-header__kicker">2010年代フロントエンド回顧</p>
+      <h1 class="page-header__title">IE11時代コーディング サンプル集</h1>
       <p class="page-header__lead">
-        This page collects practical fallback patterns that were common when IE11 support was required.
+        IE11対応が必要だったころに使われていた、実践的な代替実装をまとめたデモです。
       </p>
     </header>
 
     <main class="layout">
-      <nav class="local-nav js-sticky-nav" aria-label="Section navigation">
-        <h2 class="local-nav__title">Sections</h2>
+      <nav class="local-nav js-sticky-nav">
+        <h2 class="local-nav__title">目次</h2>
         <ul class="local-nav__list">
-          <li><a href="#flexbox">Flexbox + min-width</a></li>
-          <li><a href="#object-fit">object-fit fallback</a></li>
-          <li><a href="#aspect-ratio">aspect-ratio fallback</a></li>
-          <li><a href="#lazy">lazy loading fallback</a></li>
-          <li><a href="#toggle">toggle(force) fallback</a></li>
-          <li><a href="#fetch">fetch fallback</a></li>
-          <li><a href="#accordion">details/summary fallback</a></li>
+          <li><a href="#flexbox">Flexbox + min-width: 0</a></li>
+          <li><a href="#object-fit">object-fit の代替</a></li>
+          <li><a href="#aspect-ratio">aspect-ratio の代替</a></li>
+          <li><a href="#lazy">lazy loading の代替</a></li>
+          <li><a href="#toggle">toggle(force) の代替</a></li>
+          <li><a href="#fetch">fetch の代替</a></li>
+          <li><a href="#accordion">details/summary の代替</a></li>
           <li><a href="#meta">X-UA-Compatible</a></li>
         </ul>
       </nav>
@@ -35,7 +35,7 @@
         <section class="panel" id="flexbox">
           <h2>1. Flexbox + min-width: 0</h2>
           <p>
-            Card layout and text-overflow handling that was common in IE11 projects.
+            IE11案件でよく使われたカードレイアウトと、テキストはみ出し対策の例です。
           </p>
 
           <ul class="cards">
@@ -48,41 +48,41 @@
           </ul>
 
           <article class="media">
-            <img class="media__thumb" src="./images/photo-wide.svg" alt="Sample artwork">
+            <img class="media__thumb" src="./images/photo-wide.svg" alt="">
             <div class="media__body">
               <h3 class="media__title">
-                This is intentionally very long text to show why min-width: 0 was often needed in IE11 flex containers
+                IE11のFlexboxでは min-width: 0 がないと文字が収まらず、レイアウトが崩れることがありました
               </h3>
-              <p class="media__text">Without <code>min-width: 0</code>, overflow handling could break.</p>
+              <p class="media__text"><code>min-width: 0</code> がないと省略表示が効かないケースがあります。</p>
             </div>
           </article>
         </section>
 
         <section class="panel" id="object-fit">
-          <h2>2. object-fit fallback</h2>
+          <h2>2. object-fit の代替</h2>
           <p>
-            Modern style uses <code>object-fit: cover</code>. IE11 fallback converts the same image to a background.
+            モダン環境では <code>object-fit: cover</code> を使いますが、IE11向けは背景画像で代替します。
           </p>
           <div class="fit-grid">
             <figure class="fit-card">
-              <figcaption>Wide source in fixed frame</figcaption>
+              <figcaption>横長画像を固定枠に表示</figcaption>
               <div class="fit__frame">
-                <img data-object-fit-fallback src="./images/photo-wide.svg" alt="Wide sample image">
+                <img data-object-fit-fallback src="./images/photo-wide.svg" alt="">
               </div>
             </figure>
             <figure class="fit-card">
-              <figcaption>Tall source in fixed frame</figcaption>
+              <figcaption>縦長画像を固定枠に表示</figcaption>
               <div class="fit__frame">
-                <img data-object-fit-fallback src="./images/photo-tall.svg" alt="Tall sample image">
+                <img data-object-fit-fallback src="./images/photo-tall.svg" alt="">
               </div>
             </figure>
           </div>
         </section>
 
         <section class="panel" id="aspect-ratio">
-          <h2>3. aspect-ratio fallback</h2>
+          <h2>3. aspect-ratio の代替</h2>
           <p>
-            Side by side: modern <code>aspect-ratio</code> and legacy <code>padding-top</code> technique.
+            モダンな <code>aspect-ratio</code> と、従来の <code>padding-top</code> 手法を並べて比較します。
           </p>
           <div class="ratio-grid">
             <article class="ratio-card">
@@ -101,67 +101,67 @@
         </section>
 
         <section class="panel panel--tall" id="lazy">
-          <h2>4. loading="lazy" fallback</h2>
+          <h2>4. loading="lazy" の代替</h2>
           <p>
-            Uses native lazy loading when available. Falls back to manual loading logic for old browsers.
+            IE11前提で、スクロール量を監視して画像を順次読み込む方式で実装します。
           </p>
           <div class="lazy-grid">
-            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="Lazy sample 1">
-            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="Lazy sample 2">
-            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="Lazy sample 3">
-            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="Lazy sample 4">
-            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="Lazy sample 5">
-            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="Lazy sample 6">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="">
           </div>
         </section>
 
         <section class="panel" id="toggle">
-          <h2>5. classList.toggle(name, force) fallback</h2>
+          <h2>5. classList.toggle(name, force) の代替</h2>
           <p>
-            IE11 does not support the second argument of <code>toggle()</code>, so this sample uses explicit add/remove.
+            IE11は <code>toggle()</code> 第2引数に未対応のため、<code>add()</code> / <code>remove()</code> で実装します。
           </p>
-          <button type="button" class="btn js-toggle-button" aria-expanded="false">Open panel</button>
-          <div class="toggle-panel js-toggle-panel" aria-hidden="true">
+          <button type="button" class="btn js-toggle-button">パネルを開く</button>
+          <div class="toggle-panel js-toggle-panel">
             <p>
-              This panel is controlled with <code>add()</code> and <code>remove()</code> only.
+              このパネルは <code>add()</code> と <code>remove()</code> だけで制御しています。
             </p>
           </div>
         </section>
 
         <section class="panel" id="fetch">
-          <h2>6. fetch() fallback (XHR)</h2>
+          <h2>6. fetch() の代替（XHR）</h2>
           <p>
-            The button reads <code>data.json</code> using <code>fetch()</code> when possible, otherwise <code>XMLHttpRequest</code>.
+            IE11前提のため、通信は <code>XMLHttpRequest</code> で実装します。
           </p>
-          <button type="button" class="btn js-load-data">Load /data.json</button>
-          <pre class="output js-api-output">Click the button to run the request.</pre>
+          <button type="button" class="btn js-load-data">/data.json を読み込む</button>
+          <pre class="output js-api-output">ボタンを押すと通信デモを実行します。</pre>
         </section>
 
         <section class="panel" id="accordion">
-          <h2>7. details/summary fallback style</h2>
+          <h2>7. details/summary の代替実装</h2>
           <p>
-            Custom accordion using <code>button</code> + <code>div</code> + ARIA attributes.
+            <code>button</code> + <code>div</code> で作る、カスタムアコーディオンの例です。
           </p>
           <div class="accordion">
-            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-1" aria-expanded="false" id="acc-trigger-1">
-              Why did this pattern exist?
+            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-1" id="acc-trigger-1">
+              なぜこの実装が必要だったのか？
             </button>
-            <div class="accordion__panel is-hidden" id="acc-panel-1" role="region" aria-labelledby="acc-trigger-1">
-              IE11 had no native <code>details/summary</code>, so custom JS controls were common.
+            <div class="accordion__panel is-hidden" id="acc-panel-1">
+              IE11は <code>details/summary</code> に未対応で、JSによる自作UIが一般的でした。
             </div>
 
-            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-2" aria-expanded="false" id="acc-trigger-2">
-              What about focus management?
+            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-2" id="acc-trigger-2">
+              フォーカス管理はどうしていたか？
             </button>
-            <div class="accordion__panel is-hidden" id="acc-panel-2" role="region" aria-labelledby="acc-trigger-2">
-              Modal/accordion implementations needed extra work for keyboard navigation and focus.
+            <div class="accordion__panel is-hidden" id="acc-panel-2">
+              モーダルやアコーディオンは、キーボード操作やフォーカス制御を別途実装する必要がありました。
             </div>
           </div>
         </section>
 
         <section class="panel" id="meta">
           <h2>8. X-UA-Compatible meta</h2>
-          <p>Common head snippet from that era:</p>
+          <p>当時よく見かけた <code>head</code> 内の指定:</p>
           <pre class="code"><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</code></pre>
         </section>
       </div>

@@ -1,30 +1,15 @@
 (function () {
-  var root = document.documentElement;
-
+  // このページのマークアップが存在する前提で動かす。
   function addClass(el, className) {
-    if (!el) {
-      return;
-    }
-    if (el.classList) {
-      el.classList.add(className);
-      return;
-    }
-    if ((" " + el.className + " ").indexOf(" " + className + " ") === -1) {
-      el.className += " " + className;
-    }
+    el.classList.add(className);
   }
 
+  // IE11の classList API を前提にクラスを除去する。
   function removeClass(el, className) {
-    if (!el) {
-      return;
-    }
-    if (el.classList) {
-      el.classList.remove(className);
-      return;
-    }
-    el.className = el.className.replace(new RegExp("(^|\\s)" + className + "(\\s|$)", "g"), " ");
+    el.classList.remove(className);
   }
 
+  // IE11で使えない toggle(force) の代替として add/remove を統一利用する。
   function setClass(el, className, enabled) {
     if (enabled) {
       addClass(el, className);
@@ -33,33 +18,30 @@
     }
   }
 
-  function supportsSticky() {
-    var probe = document.createElement("div");
-    probe.style.cssText = "position:sticky;position:-webkit-sticky;";
-    return probe.style.position.indexOf("sticky") !== -1;
+  // IE11の classList API を前提にクラス有無を判定する。
+  function hasClass(el, className) {
+    return el.classList.contains(className);
   }
 
-  function supportsObjectFit() {
-    return "objectFit" in root.style;
-  }
-
+  // IE11前提で position: sticky の代替を常に有効化する。
+  // スクロール量を監視して fixed クラスを切り替え、
+  // 固定時に本文幅が広がらないようにオフセットを維持する。
   function initStickyFallback() {
     var nav = document.querySelector(".js-sticky-nav");
-    if (!nav || supportsSticky()) {
-      return;
-    }
-
-    addClass(root, "no-sticky");
-
+    var content = document.querySelector(".content");
     var navTop = nav.offsetTop;
     var navLeft = nav.getBoundingClientRect().left +
       (window.pageXOffset || document.documentElement.scrollLeft || 0);
 
     function updateSticky() {
       var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
-      var shouldFix = scrollY > navTop;
+      var viewportWidth = window.innerWidth || document.documentElement.clientWidth || 0;
+      var shouldFix = viewportWidth > 900 && scrollY > navTop;
+      var offset = nav.offsetWidth + 16;
       setClass(nav, "is-fixed", shouldFix);
       nav.style.left = shouldFix ? navLeft + "px" : "";
+      content.style.marginLeft = shouldFix ? offset + "px" : "";
+      content.style.width = shouldFix ? "calc(100% - " + offset + "px)" : "";
     }
 
     window.addEventListener("scroll", updateSticky);
@@ -73,69 +55,32 @@
     updateSticky();
   }
 
+  // IE11前提で object-fit の代替を常に有効化する。
+  // img を残しつつ、親要素の background-image で cover 表示を再現する。
   function initObjectFitFallback() {
-    if (supportsObjectFit()) {
-      return;
-    }
-
-    addClass(root, "object-fit-fallback");
-
     var images = document.querySelectorAll("[data-object-fit-fallback]");
     var i;
     for (i = 0; i < images.length; i += 1) {
       var image = images[i];
       var frame = image.parentNode;
       var src = image.getAttribute("src");
-      if (!frame || !src) {
-        continue;
-      }
       frame.style.backgroundImage = "url(\"" + src + "\")";
       addClass(frame, "fit__frame--fallback");
     }
   }
 
+  // data-src の実画像を src に差し替えて読み込みを開始する。
   function loadImage(image) {
     var source = image.getAttribute("data-src");
-    if (!source) {
-      return;
-    }
     image.setAttribute("src", source);
     image.removeAttribute("data-src");
     addClass(image, "is-loaded");
   }
 
+  // IE11前提の遅延読み込み実装。
+  // scroll/resize 監視で表示領域付近に来た画像だけ読み込む。
   function initLazyLoader() {
     var images = document.querySelectorAll(".js-lazy");
-    if (!images.length) {
-      return;
-    }
-
-    var i;
-
-    if ("loading" in HTMLImageElement.prototype) {
-      for (i = 0; i < images.length; i += 1) {
-        images[i].setAttribute("loading", "lazy");
-        loadImage(images[i]);
-      }
-      return;
-    }
-
-    if ("IntersectionObserver" in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        var j;
-        for (j = 0; j < entries.length; j += 1) {
-          if (entries[j].isIntersecting) {
-            loadImage(entries[j].target);
-            observer.unobserve(entries[j].target);
-          }
-        }
-      }, { rootMargin: "120px 0px" });
-
-      for (i = 0; i < images.length; i += 1) {
-        observer.observe(images[i]);
-      }
-      return;
-    }
 
     function onScroll() {
       var viewport = window.innerHeight || document.documentElement.clientHeight;
@@ -166,20 +111,15 @@
     onScroll();
   }
 
+  // classList.toggle(name, force) の代わりに状態変数で開閉を管理する。
   function initTogglePanel() {
     var button = document.querySelector(".js-toggle-button");
     var panel = document.querySelector(".js-toggle-panel");
-    if (!button || !panel) {
-      return;
-    }
-
     var open = false;
 
     function render() {
       setClass(panel, "is-open", open);
-      button.setAttribute("aria-expanded", open ? "true" : "false");
-      panel.setAttribute("aria-hidden", open ? "false" : "true");
-      button.innerHTML = open ? "Close panel" : "Open panel";
+      button.innerHTML = open ? "パネルを閉じる" : "パネルを開く";
     }
 
     button.addEventListener("click", function () {
@@ -190,19 +130,8 @@
     render();
   }
 
+  // IE11前提で XMLHttpRequest を使用する。
   function requestJSON(url, onSuccess, onError) {
-    if (window.fetch) {
-      window.fetch(url)
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-          }
-          return response.json();
-        })
-        .then(onSuccess)["catch"](onError);
-      return;
-    }
-
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function () {
@@ -211,14 +140,7 @@
       }
 
       if (xhr.status >= 200 && xhr.status < 300) {
-        var payload;
-        try {
-          payload = JSON.parse(xhr.responseText);
-        } catch (error) {
-          onError(error);
-          return;
-        }
-        onSuccess(payload);
+        onSuccess(JSON.parse(xhr.responseText));
       } else {
         onError(new Error("HTTP " + xhr.status));
       }
@@ -226,30 +148,28 @@
     xhr.send();
   }
 
+  // 通信デモの UI 初期化。
   function initApiSample() {
     var button = document.querySelector(".js-load-data");
     var output = document.querySelector(".js-api-output");
 
-    if (!button || !output) {
-      return;
-    }
-
     button.addEventListener("click", function () {
-      output.textContent = "Loading /data.json ...";
+      output.textContent = "/data.json を読み込み中 ...";
       requestJSON("./data.json", function (data) {
         output.textContent = JSON.stringify(data, null, 2);
       }, function (error) {
-        output.textContent = "Request failed: " + error.message;
+        output.textContent = "読み込みに失敗しました: " + error.message;
       });
     });
   }
 
+  // details/summary の代替として、クラス切り替えでアコーディオンを実装する。
   function initAccordion() {
     var triggers = document.querySelectorAll(".js-accordion-trigger");
     var i;
 
     function setState(trigger, panel, expanded) {
-      trigger.setAttribute("aria-expanded", expanded ? "true" : "false");
+      setClass(trigger, "is-open", expanded);
       setClass(panel, "is-hidden", !expanded);
     }
 
@@ -258,14 +178,10 @@
         var panelId = trigger.getAttribute("data-panel");
         var panel = document.getElementById(panelId);
 
-        if (!panel) {
-          return;
-        }
-
         setState(trigger, panel, false);
 
         trigger.addEventListener("click", function () {
-          var isOpen = trigger.getAttribute("aria-expanded") === "true";
+          var isOpen = hasClass(trigger, "is-open");
           setState(trigger, panel, !isOpen);
         });
       })(triggers[i]);
