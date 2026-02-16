@@ -297,6 +297,7 @@ img {
 }
 
 .accordion__trigger {
+  box-sizing: border-box;
   width: 100%;
   text-align: left;
   border: 0;

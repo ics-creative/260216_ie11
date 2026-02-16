@@ -62,7 +62,7 @@
         <section class="panel" id="object-fit">
           <h2>2. object-fit の代替</h2>
           <p>
-            モダン環境では <code>object-fit: cover</code> を使いますが、IE11向けは背景画像で代替します。
+            モダン環境では <code>object-fit: cover</code> が使えますが、IE11では背景画像で代替する対応がよく使われました。
           </p>
           <div class="fit-grid">
             <figure class="fit-card">
@@ -79,7 +79,7 @@
         <section class="panel" id="aspect-ratio">
           <h2>3. aspect-ratio の代替</h2>
           <p>
-            IE11では <code>aspect-ratio</code> が使えないため、<code>padding-top</code> 手法で比率を確保します。
+            IE11では <code>aspect-ratio</code> が使えないため、<code>padding-top</code> 手法で比率を確保する必要がありました。
           </p>
           <div class="ratio-grid">
             <article class="ratio-card">
@@ -92,7 +92,7 @@
         <section class="panel panel--tall" id="lazy">
           <h2>4. loading="lazy" の代替</h2>
           <p>
-            IE11前提で、スクロール量を監視して画像を順次読み込む方式で実装します。
+            画像の遅延読み込みのためには、スクロール量を監視するようなJavaScriptを用意する必要がありました。
           </p>
           <div class="lazy-grid">
             <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="">
@@ -107,7 +107,7 @@
         <section class="panel" id="toggle">
           <h2>5. classList.toggle(name, force) の代替</h2>
           <p>
-            IE11は <code>toggle()</code> 第2引数に未対応のため、<code>add()</code> / <code>remove()</code> で実装します。
+            IE11は <code>toggle()</code> 第2引数に未対応のため、<code>add()</code> / <code>remove()</code> で書き分ける必要がありました。
           </p>
           <button type="button" class="btn js-toggle-button">パネルを開く</button>
           <div class="toggle-panel js-toggle-panel">
@@ -120,16 +120,16 @@
         <section class="panel" id="fetch">
           <h2>6. fetch() の代替（XHR）</h2>
           <p>
-            IE11前提のため、通信は <code>XMLHttpRequest</code> で実装します。
+            IE11では <code>fetch()</code> が使えないため、通信処理は <code>XMLHttpRequest</code> で実装することが一般的でした。
           </p>
           <button type="button" class="btn js-load-data">/data.json を読み込む</button>
-          <pre class="output js-api-output">ボタンを押すと通信デモを実行します。</pre>
+          <pre class="output js-api-output">ボタンを押すと当時の通信例を確認できます。</pre>
         </section>
 
         <section class="panel" id="accordion">
           <h2>7. details/summary の代替実装</h2>
           <p>
-            <code>div</code> + <code>div</code> で作る、カスタムアコーディオンの例です。
+            IE11では <code>details/summary</code> が使えないため、<code>div</code> 要素で開閉UIを自作することがありました。
           </p>
           <div class="accordion">
             <div class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-1" id="acc-trigger-1">
