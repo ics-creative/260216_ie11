@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>IE11時代の互換性サンプル</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
@@ -66,15 +67,11 @@
           <div class="fit-grid">
             <figure class="fit-card">
               <figcaption>横長画像を固定枠に表示</figcaption>
-              <div class="fit__frame">
-                <img data-object-fit-fallback src="./images/photo-wide.svg" alt="">
-              </div>
+              <div class="fit__frame fit__frame--fallback" style="background-image:url('./images/photo-wide.svg')"></div>
             </figure>
             <figure class="fit-card">
               <figcaption>縦長画像を固定枠に表示</figcaption>
-              <div class="fit__frame">
-                <img data-object-fit-fallback src="./images/photo-tall.svg" alt="">
-              </div>
+              <div class="fit__frame fit__frame--fallback" style="background-image:url('./images/photo-tall.svg')"></div>
             </figure>
           </div>
         </section>
@@ -82,17 +79,11 @@
         <section class="panel" id="aspect-ratio">
           <h2>3. aspect-ratio の代替</h2>
           <p>
-            モダンな <code>aspect-ratio</code> と、従来の <code>padding-top</code> 手法を並べて比較します。
+            IE11では <code>aspect-ratio</code> が使えないため、<code>padding-top</code> 手法で比率を確保します。
           </p>
           <div class="ratio-grid">
             <article class="ratio-card">
-              <h3>Modern</h3>
-              <div class="ratio-modern">
-                <div class="ratio__inner">16:9</div>
-              </div>
-            </article>
-            <article class="ratio-card">
-              <h3>Legacy</h3>
+              <h3>padding-top 手法</h3>
               <div class="ratio-legacy">
                 <div class="ratio__inner">16:9</div>
               </div>

@@ -55,20 +55,6 @@
     updateSticky();
   }
 
-  // IE11前提で object-fit の代替を常に有効化する。
-  // img を残しつつ、親要素の background-image で cover 表示を再現する。
-  function initObjectFitFallback() {
-    var images = document.querySelectorAll("[data-object-fit-fallback]");
-    var i;
-    for (i = 0; i < images.length; i += 1) {
-      var image = images[i];
-      var frame = image.parentNode;
-      var src = image.getAttribute("src");
-      frame.style.backgroundImage = "url(\"" + src + "\")";
-      addClass(frame, "fit__frame--fallback");
-    }
-  }
-
   // data-src の実画像を src に差し替えて読み込みを開始する。
   function loadImage(image) {
     var source = image.getAttribute("data-src");
@@ -189,7 +175,6 @@
   }
 
   initStickyFallback();
-  initObjectFitFallback();
   initLazyLoader();
   initTogglePanel();
   initApiSample();

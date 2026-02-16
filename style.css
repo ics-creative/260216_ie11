@@ -113,16 +113,21 @@ img {
 ======================================== */
 .cards {
   list-style: none;
-  margin: 12px 0;
+  margin: 12px -4px 8px;
   padding: 0;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  gap: 8px;
 }
 
 .cards__item {
-  flex: 1 1 calc(33.333% - 8px);
-  min-width: 128px;
+  box-sizing: border-box;
+  width: calc(33.333% - 8px);
+  margin: 0 4px 8px;
+  -ms-flex: 0 0 calc(33.333% - 8px);
+  flex: 0 0 calc(33.333% - 8px);
+  max-width: calc(33.333% - 8px);
   border: 1px solid #d8e0ea;
   border-radius: 8px;
   background: #f2f8ff;
@@ -159,12 +164,19 @@ img {
    2) object-fit 代替 + 3) 比率ボックス
 ======================================== */
 .fit-grid,
-.ratio-grid,
-.lazy-grid {
+.ratio-grid {
   margin-top: 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.lazy-grid {
+  margin: 12px -4px 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .fit-card,
@@ -199,19 +211,10 @@ img {
   background-size: cover;
 }
 
-.fit__frame--fallback img {
-  opacity: 0;
-}
-
-.ratio-modern,
 .ratio-legacy {
   border: 1px solid #d8e0ea;
   border-radius: 8px;
   background: #ffe8b6;
-}
-
-.ratio-modern {
-  aspect-ratio: 16 / 9;
 }
 
 .ratio-legacy {
@@ -238,8 +241,14 @@ img {
    4) 手動 lazy load
 ======================================== */
 .lazy {
-  flex: 1 1 160px;
+  box-sizing: border-box;
+  width: calc(33.333% - 8px);
+  margin: 0 4px 8px;
+  -ms-flex: 0 0 calc(33.333% - 8px);
+  flex: 0 0 calc(33.333% - 8px);
+  max-width: calc(33.333% - 8px);
   height: 160px;
+  display: block;
   border: 1px solid #d8e0ea;
   border-radius: 8px;
   object-fit: cover;
@@ -361,18 +370,40 @@ img {
     top: auto;
   }
 
-  .cards__item,
+  .cards__item {
+    width: calc(50% - 8px);
+    -ms-flex: 0 0 calc(50% - 8px);
+    flex: 0 0 calc(50% - 8px);
+    max-width: calc(50% - 8px);
+  }
+
   .lazy {
-    flex-basis: calc(50% - 12px);
+    width: calc(50% - 8px);
+    -ms-flex: 0 0 calc(50% - 8px);
+    flex: 0 0 calc(50% - 8px);
+    max-width: calc(50% - 8px);
   }
 }
 
 @media (max-width: 600px) {
   .fit-card,
   .ratio-card,
-  .cards__item,
-  .lazy {
+  .cards__item {
     flex-basis: 100%;
+  }
+
+  .cards__item {
+    width: calc(100% - 8px);
+    -ms-flex: 0 0 calc(100% - 8px);
+    flex: 0 0 calc(100% - 8px);
+    max-width: calc(100% - 8px);
+  }
+
+  .lazy {
+    width: calc(100% - 8px);
+    -ms-flex: 0 0 calc(100% - 8px);
+    flex: 0 0 calc(100% - 8px);
+    max-width: calc(100% - 8px);
   }
 
   .media {
