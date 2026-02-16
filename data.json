@@ -1,0 +1,10 @@
+{
+  "message": "Hello from the IE11 compatibility sample.",
+  "items": [
+    "flexbox",
+    "xhr fallback",
+    "lazy loading",
+    "accessibility basics"
+  ],
+  "year": 2013
+}

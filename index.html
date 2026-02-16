@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IE11 Retro Samples</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body>
+    <header class="page-header">
+      <p class="page-header__kicker">2010s Frontend Retro</p>
+      <h1 class="page-header__title">IE11 Era Coding Samples</h1>
+      <p class="page-header__lead">
+        This page collects practical fallback patterns that were common when IE11 support was required.
+      </p>
+    </header>
+
+    <main class="layout">
+      <nav class="local-nav js-sticky-nav" aria-label="Section navigation">
+        <h2 class="local-nav__title">Sections</h2>
+        <ul class="local-nav__list">
+          <li><a href="#flexbox">Flexbox + min-width</a></li>
+          <li><a href="#object-fit">object-fit fallback</a></li>
+          <li><a href="#aspect-ratio">aspect-ratio fallback</a></li>
+          <li><a href="#lazy">lazy loading fallback</a></li>
+          <li><a href="#toggle">toggle(force) fallback</a></li>
+          <li><a href="#fetch">fetch fallback</a></li>
+          <li><a href="#accordion">details/summary fallback</a></li>
+          <li><a href="#meta">X-UA-Compatible</a></li>
+        </ul>
+      </nav>
+
+      <div class="content">
+        <section class="panel" id="flexbox">
+          <h2>1. Flexbox + min-width: 0</h2>
+          <p>
+            Card layout and text-overflow handling that was common in IE11 projects.
+          </p>
+
+          <ul class="cards">
+            <li class="cards__item">A</li>
+            <li class="cards__item">B</li>
+            <li class="cards__item">C</li>
+            <li class="cards__item">D</li>
+            <li class="cards__item">E</li>
+            <li class="cards__item">F</li>
+          </ul>
+
+          <article class="media">
+            <img class="media__thumb" src="./images/photo-wide.svg" alt="Sample artwork">
+            <div class="media__body">
+              <h3 class="media__title">
+                This is intentionally very long text to show why min-width: 0 was often needed in IE11 flex containers
+              </h3>
+              <p class="media__text">Without <code>min-width: 0</code>, overflow handling could break.</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel" id="object-fit">
+          <h2>2. object-fit fallback</h2>
+          <p>
+            Modern style uses <code>object-fit: cover</code>. IE11 fallback converts the same image to a background.
+          </p>
+          <div class="fit-grid">
+            <figure class="fit-card">
+              <figcaption>Wide source in fixed frame</figcaption>
+              <div class="fit__frame">
+                <img data-object-fit-fallback src="./images/photo-wide.svg" alt="Wide sample image">
+              </div>
+            </figure>
+            <figure class="fit-card">
+              <figcaption>Tall source in fixed frame</figcaption>
+              <div class="fit__frame">
+                <img data-object-fit-fallback src="./images/photo-tall.svg" alt="Tall sample image">
+              </div>
+            </figure>
+          </div>
+        </section>
+
+        <section class="panel" id="aspect-ratio">
+          <h2>3. aspect-ratio fallback</h2>
+          <p>
+            Side by side: modern <code>aspect-ratio</code> and legacy <code>padding-top</code> technique.
+          </p>
+          <div class="ratio-grid">
+            <article class="ratio-card">
+              <h3>Modern</h3>
+              <div class="ratio-modern">
+                <div class="ratio__inner">16:9</div>
+              </div>
+            </article>
+            <article class="ratio-card">
+              <h3>Legacy</h3>
+              <div class="ratio-legacy">
+                <div class="ratio__inner">16:9</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel panel--tall" id="lazy">
+          <h2>4. loading="lazy" fallback</h2>
+          <p>
+            Uses native lazy loading when available. Falls back to manual loading logic for old browsers.
+          </p>
+          <div class="lazy-grid">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="Lazy sample 1">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="Lazy sample 2">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="Lazy sample 3">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="Lazy sample 4">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-wide.svg" alt="Lazy sample 5">
+            <img class="lazy js-lazy" src="./images/placeholder.svg" data-src="./images/photo-tall.svg" alt="Lazy sample 6">
+          </div>
+        </section>
+
+        <section class="panel" id="toggle">
+          <h2>5. classList.toggle(name, force) fallback</h2>
+          <p>
+            IE11 does not support the second argument of <code>toggle()</code>, so this sample uses explicit add/remove.
+          </p>
+          <button type="button" class="btn js-toggle-button" aria-expanded="false">Open panel</button>
+          <div class="toggle-panel js-toggle-panel" aria-hidden="true">
+            <p>
+              This panel is controlled with <code>add()</code> and <code>remove()</code> only.
+            </p>
+          </div>
+        </section>
+
+        <section class="panel" id="fetch">
+          <h2>6. fetch() fallback (XHR)</h2>
+          <p>
+            The button reads <code>data.json</code> using <code>fetch()</code> when possible, otherwise <code>XMLHttpRequest</code>.
+          </p>
+          <button type="button" class="btn js-load-data">Load /data.json</button>
+          <pre class="output js-api-output">Click the button to run the request.</pre>
+        </section>
+
+        <section class="panel" id="accordion">
+          <h2>7. details/summary fallback style</h2>
+          <p>
+            Custom accordion using <code>button</code> + <code>div</code> + ARIA attributes.
+          </p>
+          <div class="accordion">
+            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-1" aria-expanded="false" id="acc-trigger-1">
+              Why did this pattern exist?
+            </button>
+            <div class="accordion__panel is-hidden" id="acc-panel-1" role="region" aria-labelledby="acc-trigger-1">
+              IE11 had no native <code>details/summary</code>, so custom JS controls were common.
+            </div>
+
+            <button type="button" class="accordion__trigger js-accordion-trigger" data-panel="acc-panel-2" aria-expanded="false" id="acc-trigger-2">
+              What about focus management?
+            </button>
+            <div class="accordion__panel is-hidden" id="acc-panel-2" role="region" aria-labelledby="acc-trigger-2">
+              Modal/accordion implementations needed extra work for keyboard navigation and focus.
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="meta">
+          <h2>8. X-UA-Compatible meta</h2>
+          <p>Common head snippet from that era:</p>
+          <pre class="code"><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</code></pre>
+        </section>
+      </div>
+    </main>
+
+    <script src="./main.js"></script>
+  </body>
+</html>

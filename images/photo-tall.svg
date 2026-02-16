@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="800" viewBox="0 0 450 800">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ed6a1f"/>
+      <stop offset="100%" stop-color="#ffd59a"/>
+    </linearGradient>
+  </defs>
+  <rect width="450" height="800" fill="url(#g)"/>
+  <rect x="60" y="120" width="330" height="470" fill="#ffeed9" opacity="0.9"/>
+  <rect x="100" y="170" width="250" height="270" fill="#ffffff"/>
+  <circle cx="225" cy="305" r="72" fill="#f2c185"/>
+  <text x="52" y="700" fill="#7c2d00" font-family="Arial, sans-serif" font-size="44" font-weight="700">TALL IMAGE</text>
+  <text x="52" y="746" fill="#8f3c08" font-family="Arial, sans-serif" font-size="24">450 x 800</text>
+</svg>
